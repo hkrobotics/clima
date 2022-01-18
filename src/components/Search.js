@@ -22,7 +22,7 @@ function Search() {
 
 
     const weather = () => {
-        const url = `https://api.weatherapi.com/v1/current.json?key=4cc592fbaf724228bdf100347221101&q=${search}&aqi=yes`
+        const url = `https://api.weatherapi.com/v1/current.json?key=e3fc8b5047434c58b1374503221801&q=${search}&aqi=yes`
         axios.get(url)
             .then(res => {
                 setData1(res.data.current)
