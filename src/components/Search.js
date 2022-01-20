@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useState } from 'react'
 import axios from 'axios'
 import Sunny from '../img/sunny.png'
@@ -19,7 +19,25 @@ function Search() {
     const [data, setData1] = useState([]);
     const [data2, setData2] = useState([]);
     const [data3, setData3] = useState([]);
+    const [dataInit,setDataInit] = useState([]);
 
+    const weather_initial = () => {
+        const url = `https://api.weatherapi.com/v1/current.json?key=e3fc8b5047434c58b1374503221801&q=mumbai&aqi=yes`
+        axios.get(url)
+            .then(res => {
+                setData1(res.data.current)
+                setData2(res.data.location)
+                setData3(res.data.current.condition)
+                // console.log("hello mumbai");
+            })
+    }
+
+    useEffect(() => {
+        weather_initial()
+        // console.log("hello init");
+    },[] )
+
+    
 
     const weather = () => {
         const url = `https://api.weatherapi.com/v1/current.json?key=e3fc8b5047434c58b1374503221801&q=${search}&aqi=yes`
@@ -28,6 +46,7 @@ function Search() {
                 setData1(res.data.current)
                 setData2(res.data.location)
                 setData3(res.data.current.condition)
+                // console.log("hello search");
             })
     }
 
@@ -40,8 +59,8 @@ function Search() {
                     setSearch(event.target.value)
 
 
-                }} placeholder='Enter city name' />
-                <button type='submit' onClick={weather} className='weatherInputBtn' ><UilSearch /></button>
+                }} onKeyPress={(e) => {if(e.key=='Enter'){weather()};}} placeholder='Enter city name' />
+                <button type='submit' onClick={weather}  className='weatherInputBtn' ><UilSearch /></button>
             </div>
             <div className='weatherBody'>
 
